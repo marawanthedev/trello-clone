@@ -6,3 +6,4 @@ export const createCardSchema = z.object({
     status: z.nativeEnum(CardStatus),
     userId: z.number().int().positive(),
 });
+

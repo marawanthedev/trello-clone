@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../trpc";
-import { createCardSchema } from "../schemas";
-import { addCard } from "../service";
+import { createCardSchema, getByIdSchema } from "../schemas";
+import { addCard, getCard } from "../service";
 
 export const cardRouter = router({
     create: publicProcedure
@@ -10,4 +10,9 @@ export const cardRouter = router({
             const addedCard = addCard(input)
             return addedCard
         }),
+    getById: publicProcedure.input(getByIdSchema).query(async (opts) => {
+        const { input: { id } } = opts;
+        const card = await getCard(id)
+        return card;
+    }),
 });

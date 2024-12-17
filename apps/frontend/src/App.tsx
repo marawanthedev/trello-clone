@@ -6,9 +6,9 @@ const App: React.FC = () => {
 
 
   const fetchUserList = async () => {
-    const data = await trpc.user.listAll.query()
+    const data = await trpc.user.getById.query({ id: 1 })
     setUsers(data)
-
+    console.log({ data })
   }
 
   const addCard = async () => {

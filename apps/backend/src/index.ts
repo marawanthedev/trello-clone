@@ -1,11 +1,6 @@
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import { z } from 'zod';
-import { db } from './db';
-import { publicProcedure, router } from './trpc';
 import express from 'express';
 import cors from 'cors';
 import { createExpressMiddleware } from "@trpc/server/adapters/express"
-import { PrismaClient } from '@prisma/client';
 import { appRouter } from './router';
 
 const app = express();

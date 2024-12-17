@@ -1,2 +1,2 @@
-export * from "./card"
-export * from "./user"
+export * from "./Card"
+export * from "./User"

@@ -1,17 +1,17 @@
-import { db } from "../db";
+import { createUserSchema, getByIdSchema, } from "../schemas";
+import { addUser, getUser } from "../service";
 import { router, publicProcedure } from "../trpc";
-import { z } from 'zod';
 
 export const userRouter = router({
-    listAll: publicProcedure.query(async () => {
-        const users = await db.user.findMany();
-        console.log({ users })
-        return users;
-    }),
-    getById: publicProcedure.input(z.string()).query(async (opts) => {
-        const { input } = opts;
-        const user = await db.user.findById(input);
+    getById: publicProcedure.input(getByIdSchema).query(async (opts) => {
+        const { input: { id } } = opts;
+        const user = await getUser(id)
         return user;
+    }),
+    create: publicProcedure.input(createUserSchema).mutation(async (opts: any) => {
+        const { input } = opts;
+        const addedUser = addUser(input)
+        return addedUser
     }),
 
 });
