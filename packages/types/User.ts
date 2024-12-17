@@ -1,0 +1,8 @@
+import { Card } from "./Card"
+
+export type User = {
+    id: number,
+    name: string
+    email: string,
+    Card: Card[]
+}

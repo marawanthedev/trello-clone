@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/dockerfile
+    ports:
+      - "3000:3000" # Backend port
+    environment:
+      - DATABASE_URL=postgresql://myuser:trelloPassword@postgres:5432/trelloDb
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/frontend/dockerfile
+    ports:
+      - "4000:5173"
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: trelloPassword
+      POSTGRES_DB: trelloDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

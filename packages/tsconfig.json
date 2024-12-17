@@ -16,14 +16,10 @@
         "allowJs": true,
         "noEmit": true,
         "isolatedModules": true,
-        "paths": {
-            "backend/*": [
-                "../backend/*"
-            ]
-        },
     },
     "include": [
-        "src"
+        "constants",
+        "types"
     ],
     "exclude": [
         "node_modules"

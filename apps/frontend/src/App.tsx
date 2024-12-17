@@ -6,9 +6,14 @@ const App: React.FC = () => {
 
 
   const fetchUserList = async () => {
-    const data = await trpc.userList.query()
+    const data = await trpc.user.listAll.query()
     setUsers(data)
 
+  }
+
+  const addCard = async () => {
+    const addedCard = await trpc.card.create.mutate({ content: "hi4", status: 'PENDING', userId: 1 })
+    console.log({ addedCard })
   }
 
   useEffect(() => {
@@ -17,9 +22,10 @@ const App: React.FC = () => {
 
 
   return (
-    <div style={{ width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: "yellow" }}>
-      <h1>Users list</h1>
-      {JSON.stringify(users)}
+    <div style={{ width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: "white" }}>
+      {/* <h1>Users list</h1> */}
+      <button onClick={addCard}>add</button>
+      {/* {JSON.stringify(users)} */}
     </div>
   );
 };
