@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es6",
+        "rootDir": ".",
+        "lib": [
+            "dom",
+            "es2015"
+        ],
+        "jsx": "react-jsx",
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "noEmit": true,
+        "isolatedModules": true,
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

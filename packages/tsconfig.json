@@ -1,21 +1,7 @@
 {
+    "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "baseUrl": ".",
-        "target": "es2020",
-        "lib": [
-            "dom",
-            "es2015"
-        ],
-        "jsx": "react-jsx",
-        "strict": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "allowJs": true,
-        "noEmit": true,
-        "isolatedModules": true,
     },
     "include": [
         "constants",
