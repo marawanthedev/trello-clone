@@ -48,6 +48,22 @@ export const Board: React.FC = () => {
         });
     };
 
+    const addNewCard = (column: string) => {
+        const newCard: Card = {
+            id: Math.random().toString(36).substring(2, 9),
+            content: "placeholder",
+        };
+
+        setColumns((prevState) => {
+            const updatedColumnCards = [...prevState[column], newCard];
+            return {
+                ...prevState,
+                [column]: updatedColumnCards,
+            };
+        });
+    };
+
+
     return (
         <div style={{ display: "flex", gap: "16px", padding: "40px 60px" }}>
             {Object.keys(columns).map((colName) => (
@@ -56,6 +72,7 @@ export const Board: React.FC = () => {
                     title={colName}
                     cards={columns[colName]}
                     moveCard={moveCard}
+                    addNewCard={addNewCard}
                 />
             ))}
         </div>

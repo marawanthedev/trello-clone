@@ -20,7 +20,6 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
 
     const [content, setContent] = useState(card.content);
     const [isEditing, setIsEditing] = useState(false);
-    const cardRef = useRef<HTMLDivElement | null>(null);
 
     const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setContent(event.target.value);
@@ -39,6 +38,7 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
         setIsEditing(true);
     };
 
+
     return (
         <Paper
             ref={dragRef}
@@ -49,6 +49,7 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
                 opacity: isDragging ? 0.5 : 1,
                 boxShadow: 2,
                 cursor: "grab",
+                minHeight: '40px'
             }}
         >
             {isEditing ? (
