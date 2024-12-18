@@ -2,6 +2,7 @@ import React from "react";
 import { useDrop } from "react-dnd";
 import { CardItem } from "./CardItem";
 import { Card } from "./Board";
+import { Typography } from "@mui/material";
 
 interface ColumnProps {
     title: string;
@@ -29,7 +30,7 @@ export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard }) => {
                 boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
             }}
         >
-            <h3>{title}</h3>
+            <Typography variant="h4" sx={{ marginBottom: '10px' }}>{title}</Typography>
             {cards.map((card) => (
                 <CardItem key={card.id} card={card} sourceColumn={title} />
             ))}

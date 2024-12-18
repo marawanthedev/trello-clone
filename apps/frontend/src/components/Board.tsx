@@ -49,7 +49,7 @@ export const Board: React.FC = () => {
     };
 
     return (
-        <div style={{ display: "flex", gap: "16px" }}>
+        <div style={{ display: "flex", gap: "16px", padding: "40px 60px" }}>
             {Object.keys(columns).map((colName) => (
                 <Column
                     key={colName}
