@@ -1,5 +1,5 @@
 import { z } from 'zod';
 
-export const getByIdSchema = z.object({
+export const IdSchema = z.object({
     id: z.number(),
 });

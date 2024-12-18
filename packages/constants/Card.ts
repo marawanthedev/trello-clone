@@ -1,6 +1,5 @@
 export enum CardStatus {
-    PENDING,
-    PROCESSING,
-    FAILED,
-    SUCCESS
+    "PENDING" = "PENDING",
+    "INPROGRESS" = "INPROGRESS",
+    "DONE" = "DONE"
 }

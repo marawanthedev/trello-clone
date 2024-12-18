@@ -1,9 +1,9 @@
-import { createUserSchema, getByIdSchema, } from "../schemas";
+import { createUserSchema, IdSchema, } from "../schemas";
 import { addUser, getUser } from "../service";
 import { router, publicProcedure } from "../trpc";
 
 export const userRouter = router({
-    getById: publicProcedure.input(getByIdSchema).query(async (opts) => {
+    getById: publicProcedure.input(IdSchema).query(async (opts) => {
         const { input: { id } } = opts;
         const user = await getUser(id)
         return user;

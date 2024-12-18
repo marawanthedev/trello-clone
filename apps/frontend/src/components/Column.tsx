@@ -3,15 +3,17 @@ import { useDrop } from "react-dnd";
 import { CardItem } from "./CardItem";
 import { Card } from "./Board";
 import { Box, Button, Typography } from "@mui/material";
+import { CardStatus } from "packages/constants";
 
 interface ColumnProps {
-    title: string;
+    title: CardStatus;
     cards: Card[];
-    moveCard: (sourceColumn: string, targetColumn: string, card: Card) => void;
-    addNewCard: (column: string) => void;  // Function to add a new card
+    moveCard: (sourceColumn: CardStatus, targetColumn: CardStatus, card: Card) => void;
+    addCard: (column: CardStatus) => void;
+    removeCard: (card: Card) => void;
 }
 
-export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addNewCard }) => {
+export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard }) => {
     const [, dropRef] = useDrop({
         accept: "CARD",
         drop: (item: any) => {
@@ -30,11 +32,11 @@ export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addNewCa
                 boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
             }}
         >
-            <Typography variant="h4" sx={{ marginBottom: '10px' }}>{title}</Typography>
+            <Typography variant="h4" sx={{ marginBottom: '10px', textTransform: "capitalize" }}>{title.toString().toLowerCase()}</Typography>
             {cards.map((card) => (
-                <CardItem key={card.id} card={card} sourceColumn={title} updateCardContent={() => { }} />
+                <CardItem key={card.id} card={card} sourceColumn={title} updateCardContent={() => { }} removeCard={removeCard} />
             ))}
-            <Button variant="contained" sx={{ width: "100%" }} onClick={() => addNewCard(title)} style={{ marginTop: "16px" }}>
+            <Button variant="contained" sx={{ width: "100%" }} onClick={() => addCard(title)} style={{ marginTop: "16px" }}>
                 Add New Card
             </Button>
         </Box>

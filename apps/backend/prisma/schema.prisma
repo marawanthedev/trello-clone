@@ -17,13 +17,13 @@ model User {
   id    Int    @id @default(autoincrement())
   name  String
   email String @unique
-  Card  Card[]
+  // Card  Card[]
 }
 
 model Card {
   id      Int        @id @default(autoincrement())
   content String
   status  CardStatus
-  author  User       @relation(fields: [userId], references: [id])
-  userId  Int
+  // author  User       @relation(fields: [userId], references: [id])
+  // userId  Int
 }

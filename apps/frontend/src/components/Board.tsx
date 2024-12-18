@@ -1,32 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Column } from "./Column";
+import { Box, Typography } from "@mui/material";
+import trpc from "../trpc";
+import { CardStatus } from "../../../../packages/constants"
 
 const initialData = {
-    "To do": [
-        { id: "1", content: "Task 1" },
-        { id: "2", content: "Task 2" },
+    [CardStatus.PENDING]: [
+        // { id: "1", content: "Task 1" },
+        // { id: "2", content: "Task 2" },
     ],
-    Doing: [
-        { id: "3", content: "Task 3" },
+    [CardStatus.INPROGRESS]: [
+        // { id: "3", content: "Task 3" },
     ],
-    Done: [
-        { id: "4", content: "Task 4" },
+    [CardStatus.DONE]: [
+        // { id: "4", content: "Task 4" },
     ],
 };
 
 export interface Card {
-    id: string;
+    id: number;
     content: string;
+    status: keyof typeof CardStatus;
+    // userId: number;
 }
 
 interface ColumnData {
     [key: string]: Card[];
 }
 
-export const Board: React.FC = () => {
-    const [columns, setColumns] = useState<ColumnData>(initialData);
+const initialColumnsData: ColumnData = {
+    [CardStatus.PENDING]: [
 
-    const moveCard = (sourceColumn: string, targetColumn: string, card: Card) => {
+    ],
+    [CardStatus.INPROGRESS]: [
+    ],
+    [CardStatus.DONE]: [
+    ],
+};
+
+export const Board: React.FC = () => {
+    const [columns, setColumns] = useState<ColumnData>(initialColumnsData);
+    // take date with status
+    // create columns out of it 
+    // then setColumns
+
+    const moveCard = (sourceColumn: CardStatus, targetColumn: CardStatus, card: Card) => {
         setColumns((prevState) => {
             const sourceCards = [...prevState[sourceColumn]];
             const targetCards = [...prevState[targetColumn]];
@@ -48,33 +66,73 @@ export const Board: React.FC = () => {
         });
     };
 
-    const addNewCard = (column: string) => {
-        const newCard: Card = {
-            id: Math.random().toString(36).substring(2, 9),
-            content: "placeholder",
-        };
-
-        setColumns((prevState) => {
-            const updatedColumnCards = [...prevState[column], newCard];
-            return {
-                ...prevState,
-                [column]: updatedColumnCards,
-            };
-        });
+    const addCard = async (status: CardStatus) => {
+        try {
+            const addedCard: Card = await trpc.card.create.mutate({ content: 'placeholder', status: status, })
+            console.log(`Successfully added card with id of:${addedCard.id}`)
+            setColumns((prev) => {
+                return {
+                    ...prev,
+                    [addedCard.status]: [
+                        ...prev[addedCard.status],
+                        addedCard
+                    ]
+                }
+            })
+        }
+        catch (e: any) {
+            throw new Error(e)
+        }
     };
+    const removeCard = async (card: Card) => {
+        try {
+            const filteredColumn = columns[card.status].filter((prevCard) => prevCard.id !== card.id)
+            const deletedCard = await trpc.card.deleteById.mutate({ id: card.id })
 
+            console.log({ filteredColumn })
+
+            setColumns((prev) => {
+                return {
+                    ...prev,
+                    [deletedCard.status]: filteredColumn
+                }
+            })
+
+            console.log(`Successfully deleted card with id of:${deletedCard.id}`)
+        } catch (e: any) {
+            throw new Error(e)
+        }
+    }
+
+    const getAllCards = async () => {
+        const cards = await trpc.card.getAll.query()
+
+        cards.forEach((card) => {
+            initialColumnsData[CardStatus[card.status as keyof typeof CardStatus]].push(card)
+        })
+
+        setColumns(initialColumnsData)
+    }
+
+    useEffect(() => {
+        getAllCards()
+    }, [])
 
     return (
-        <div style={{ display: "flex", gap: "16px", padding: "40px 60px" }}>
-            {Object.keys(columns).map((colName) => (
-                <Column
-                    key={colName}
-                    title={colName}
-                    cards={columns[colName]}
-                    moveCard={moveCard}
-                    addNewCard={addNewCard}
-                />
-            ))}
-        </div>
+        <Box style={{ padding: "40px 60px" }}>
+            <Typography variant="h4">Tasks List</Typography>
+            <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                {Object.keys(columns).map((colName) => (
+                    <Column
+                        key={colName}
+                        title={CardStatus[colName as keyof typeof CardStatus]}
+                        cards={columns[colName]}
+                        moveCard={moveCard}
+                        addCard={addCard}
+                        removeCard={removeCard}
+                    />
+                ))}
+            </Box>
+        </Box>
     );
 };
