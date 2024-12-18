@@ -11,7 +11,7 @@
         "strict": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
-        "module": "ESNext",
+        "module": "commonjs",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "allowJs": true,
