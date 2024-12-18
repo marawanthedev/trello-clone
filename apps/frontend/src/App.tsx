@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import trpc from './trpc';  // Make sure you have this import correctly pointing to your trpc setup
+import React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Board } from "./components/Board";
 
-const App: React.FC = () => {
-  const [users, setUsers] = useState<any>([])
-
-
-  const fetchUserList = async () => {
-    const data = await trpc.user.getById.query({ id: 1 })
-    setUsers(data)
-    console.log({ data })
-  }
-
-  const addCard = async () => {
-    const addedCard = await trpc.card.create.mutate({ content: "hi4", status: 'PENDING', userId: 1 })
-    console.log({ addedCard })
-  }
-
-  useEffect(() => {
-    fetchUserList()
-  }, [])
-
-
+function App() {
   return (
-    <div style={{ width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: "white" }}>
-      {/* <h1>Users list</h1> */}
-      <button onClick={addCard}>add</button>
-      {/* {JSON.stringify(users)} */}
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <Board />
+    </DndProvider>
   );
-};
+}
 
 export default App;
