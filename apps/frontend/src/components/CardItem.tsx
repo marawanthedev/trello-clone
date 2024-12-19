@@ -8,13 +8,11 @@ import { Delete } from "@mui/icons-material";
 interface CardItemProps {
     card: Card;
     sourceColumn: CardStatus;
-    updateCardContent: (cardId: number, newContent: string) => void;
     removeCard: (card: Card) => void,
-    updateCard: (id: number, content: string, status: CardStatus) => void
-
+    updateCardContent: (id: number, content: string,) => void,
 }
 
-export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCardContent, removeCard, updateCard }) => {
+export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, removeCard, updateCardContent }) => {
     const [{ isDragging }, dragRef] = useDrag({
         type: "CARD",
         item: { card, sourceColumn },
@@ -27,7 +25,7 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
     const [isEditing, setIsEditing] = useState(false);
 
     const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        updateCard(card.id, event.target.value, card.status as CardStatus)
+        updateCardContent(card.id, event.target.value,)
         setContent(event.target.value);
     };
 
@@ -42,7 +40,6 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
         setIsEditing(true);
     };
 
-    console.log('inner card', card)
     return (
         <Paper
             ref={dragRef}

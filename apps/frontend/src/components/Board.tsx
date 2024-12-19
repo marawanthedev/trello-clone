@@ -121,13 +121,25 @@ export const Board: React.FC = () => {
         }
     }
 
-    const updateCard = async (id: number, content: string, status: CardStatus) => {
+    const updateCardContent = async (id: number, content: string) => {
         try {
-            const updatedCard = await trpc.card.editById.mutate({ content, id, status })
+            const updatedCard = await trpc.card.editContentById.mutate({ content, id, })
             console.log({ updatedCard })
         }
         catch (e) {
-            console.log(`failed to update card`)
+            console.log(`failed to update card content`)
+            // throw new Error(e)
+        }
+    }
+
+    const updateCardStatus = async (id: number, status: CardStatus) => {
+        try {
+            console.log({ id, status })
+            const updatedCard = await trpc.card.editStatusById.mutate({ status, id, })
+            console.log({ updatedCard })
+        }
+        catch (e) {
+            console.log(`failed to update card status`)
             // throw new Error(e)
         }
     }
@@ -148,7 +160,8 @@ export const Board: React.FC = () => {
                         moveCard={moveCard}
                         addCard={addCard}
                         removeCard={removeCard}
-                        updateCard={updateCard}
+                        updateCardContent={updateCardContent}
+                        updateCardStatus={updateCardStatus}
                     />
                 ))}
             </Box>

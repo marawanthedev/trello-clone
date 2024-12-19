@@ -42,16 +42,31 @@ export const deleteCard = async (id: number) => {
     }
 };
 
-export const editCard = async (id: number, content: string, status: CardStatus) => {
+export const editCardContent = async (id: number, content: string) => {
     try {
         return await prisma.card.update({
             where: {
                 id: id,
             },
-            data: { content, status },
+            data: { content },
         })
     } catch (error) {
-        console.error(`Error updating card with id of ${id}`, error);
-        throw new Error(`Error updating card with id of ${id}`);
+        console.error(`Error updating card content with id of ${id}`, error);
+        throw new Error(`Error updating card content with id of ${id}`);
     }
 };
+
+export const editCardStatus = async (id: number, status: CardStatus) => {
+    try {
+        return await prisma.card.update({
+            where: {
+                id: id,
+            },
+            data: { status },
+        })
+    } catch (error) {
+        console.error(`Error updating card status with id of ${id}`, error);
+        throw new Error(`Error updating card with status id of ${id}`);
+    }
+};
+

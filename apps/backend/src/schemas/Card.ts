@@ -6,8 +6,11 @@ export const createCardSchema = z.object({
     status: z.nativeEnum(CardStatus),
 });
 
-export const editCardSchema = z.object({
+export const editCardContentSchema = z.object({
     id: z.number(),
     content: z.string().min(1),
+});
+export const editCardStatusSchema = z.object({
+    id: z.number(),
     status: z.nativeEnum(CardStatus),
 });

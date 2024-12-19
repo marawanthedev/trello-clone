@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../trpc";
-import { createCardSchema, editCardSchema, IdSchema } from "../schemas";
-import { addCard, deleteCard, editCard, getAllCards, getCard } from "../service";
+import { createCardSchema, editCardContentSchema, editCardStatusSchema, IdSchema } from "../schemas";
+import { addCard, deleteCard, editCardContent, editCardStatus, getAllCards, getCard } from "../service";
 
 export const cardRouter = router({
     create: publicProcedure
@@ -24,9 +24,14 @@ export const cardRouter = router({
         const cards = await getAllCards()
         return cards;
     }),
-    editById: publicProcedure.input(editCardSchema).mutation(async (opts) => {
-        const { input: { id, content, status } } = opts;
-        const card = await editCard(id, content, status)
+    editContentById: publicProcedure.input(editCardContentSchema).mutation(async (opts) => {
+        const { input: { id, content } } = opts;
+        const card = await editCardContent(id, content)
+        return card;
+    }),
+    editStatusById: publicProcedure.input(editCardStatusSchema).mutation(async (opts) => {
+        const { input: { id, status } } = opts;
+        const card = await editCardStatus(id, status)
         return card;
     }),
 });
