@@ -11,9 +11,10 @@ interface ColumnProps {
     moveCard: (sourceColumn: CardStatus, targetColumn: CardStatus, card: Card) => void;
     addCard: (column: CardStatus) => void;
     removeCard: (card: Card) => void;
+    updateCard: (id: number, content: string, status: CardStatus) => void
 }
 
-export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard }) => {
+export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard, updateCard }) => {
     const [, dropRef] = useDrop({
         accept: "CARD",
         drop: (item: any) => {
@@ -34,7 +35,7 @@ export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard,
         >
             <Typography variant="h4" sx={{ marginBottom: '10px', textTransform: "capitalize" }}>{title.toString().toLowerCase()}</Typography>
             {cards.map((card) => (
-                <CardItem key={card.id} card={card} sourceColumn={title} updateCardContent={() => { }} removeCard={removeCard} />
+                <CardItem key={card.id} card={card} sourceColumn={title} updateCardContent={() => { }} removeCard={removeCard} updateCard={updateCard} />
             ))}
             <Button variant="contained" sx={{ width: "100%" }} onClick={() => addCard(title)} style={{ marginTop: "16px" }}>
                 Add New Card

@@ -81,15 +81,14 @@ export const Board: React.FC = () => {
             })
         }
         catch (e: any) {
-            throw new Error(e)
+            console.log(`failed to add card`)
+            // throw new Error(e)
         }
     };
     const removeCard = async (card: Card) => {
         try {
             const filteredColumn = columns[card.status].filter((prevCard) => prevCard.id !== card.id)
             const deletedCard = await trpc.card.deleteById.mutate({ id: card.id })
-
-            console.log({ filteredColumn })
 
             setColumns((prev) => {
                 return {
@@ -100,18 +99,37 @@ export const Board: React.FC = () => {
 
             console.log(`Successfully deleted card with id of:${deletedCard.id}`)
         } catch (e: any) {
-            throw new Error(e)
+            console.log(`failed to delete card`)
+            // throw new Error(e)
         }
     }
 
     const getAllCards = async () => {
-        const cards = await trpc.card.getAll.query()
 
-        cards.forEach((card) => {
-            initialColumnsData[CardStatus[card.status as keyof typeof CardStatus]].push(card)
-        })
+        try {
+            const cards = await trpc.card.getAll.query()
 
-        setColumns(initialColumnsData)
+            cards.forEach((card) => {
+                initialColumnsData[CardStatus[card.status as keyof typeof CardStatus]].push(card)
+            })
+
+            setColumns(initialColumnsData)
+        }
+        catch (e: any) {
+            console.log(`failed to get all cards`)
+            // throw new Error(e)
+        }
+    }
+
+    const updateCard = async (id: number, content: string, status: CardStatus) => {
+        try {
+            const updatedCard = await trpc.card.editById.mutate({ content, id, status })
+            console.log({ updatedCard })
+        }
+        catch (e) {
+            console.log(`failed to update card`)
+            // throw new Error(e)
+        }
     }
 
     useEffect(() => {
@@ -130,6 +148,7 @@ export const Board: React.FC = () => {
                         moveCard={moveCard}
                         addCard={addCard}
                         removeCard={removeCard}
+                        updateCard={updateCard}
                     />
                 ))}
             </Box>

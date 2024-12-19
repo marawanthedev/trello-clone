@@ -9,10 +9,12 @@ interface CardItemProps {
     card: Card;
     sourceColumn: CardStatus;
     updateCardContent: (cardId: number, newContent: string) => void;
-    removeCard: (card: Card) => void
+    removeCard: (card: Card) => void,
+    updateCard: (id: number, content: string, status: CardStatus) => void
+
 }
 
-export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCardContent, removeCard }) => {
+export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCardContent, removeCard, updateCard }) => {
     const [{ isDragging }, dragRef] = useDrag({
         type: "CARD",
         item: { card, sourceColumn },
@@ -25,6 +27,7 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn, updateCa
     const [isEditing, setIsEditing] = useState(false);
 
     const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        updateCard(card.id, event.target.value, card.status as CardStatus)
         setContent(event.target.value);
     };
 

@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { CardStatus, Prisma } from '@prisma/client';
 import { prisma } from "../prisma";
 
 
@@ -39,5 +39,19 @@ export const deleteCard = async (id: number) => {
     } catch (error) {
         console.error(`Error deleting card with id of ${id}`, error);
         throw new Error(`Error deleting card with id of ${id}`);
+    }
+};
+
+export const editCard = async (id: number, content: string, status: CardStatus) => {
+    try {
+        return await prisma.card.update({
+            where: {
+                id: id,
+            },
+            data: { content, status },
+        })
+    } catch (error) {
+        console.error(`Error updating card with id of ${id}`, error);
+        throw new Error(`Error updating card with id of ${id}`);
     }
 };
