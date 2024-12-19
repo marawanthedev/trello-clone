@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Column } from "./Column";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import trpc from "../trpc";
 import { CardStatus } from "../../../../packages/constants"
 
@@ -40,9 +40,8 @@ const initialColumnsData: ColumnData = {
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useState<ColumnData>(initialColumnsData);
-    // take date with status
-    // create columns out of it 
-    // then setColumns
+    const [loading, setLoading] = useState(false);
+
 
     const moveCard = (sourceColumn: CardStatus, targetColumn: CardStatus, card: Card) => {
         setColumns((prevState) => {
@@ -67,6 +66,8 @@ export const Board: React.FC = () => {
     };
 
     const addCard = async (status: CardStatus) => {
+        setLoading(true);
+
         try {
             const addedCard: Card = await trpc.card.create.mutate({ content: 'placeholder', status: status, })
             console.log(`Successfully added card with id of:${addedCard.id}`)
@@ -84,8 +85,13 @@ export const Board: React.FC = () => {
             console.log(`failed to add card`)
             // throw new Error(e)
         }
+        finally {
+            setLoading(false);
+        }
     };
     const removeCard = async (card: Card) => {
+        setLoading(true);
+
         try {
             const filteredColumn = columns[card.status].filter((prevCard) => prevCard.id !== card.id)
             const deletedCard = await trpc.card.deleteById.mutate({ id: card.id })
@@ -102,9 +108,13 @@ export const Board: React.FC = () => {
             console.log(`failed to delete card`)
             // throw new Error(e)
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     const getAllCards = async () => {
+        setLoading(true);
 
         try {
             const cards = await trpc.card.getAll.query()
@@ -119,9 +129,14 @@ export const Board: React.FC = () => {
             console.log(`failed to get all cards`)
             // throw new Error(e)
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     const updateCardContent = async (id: number, content: string) => {
+        setLoading(true);
+
         try {
             const updatedCard = await trpc.card.editContentById.mutate({ content, id, })
             console.log({ updatedCard })
@@ -130,9 +145,14 @@ export const Board: React.FC = () => {
             console.log(`failed to update card content`)
             // throw new Error(e)
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     const updateCardStatus = async (id: number, status: CardStatus) => {
+        setLoading(true);
+
         try {
             console.log({ id, status })
             const updatedCard = await trpc.card.editStatusById.mutate({ status, id, })
@@ -141,6 +161,9 @@ export const Board: React.FC = () => {
         catch (e) {
             console.log(`failed to update card status`)
             // throw new Error(e)
+        }
+        finally {
+            setLoading(false);
         }
     }
 
@@ -151,6 +174,24 @@ export const Board: React.FC = () => {
     return (
         <Box style={{ padding: "40px 60px" }}>
             <Typography variant="h4">Tasks List</Typography>
+            {loading && (
+                <Box
+                    sx={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 9999,
+                    }}
+                >
+                    <CircularProgress size={60} />
+                </Box>
+            )}
             <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
                 {Object.keys(columns).map((colName) => (
                     <Column
