@@ -28,7 +28,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error }) => {
     );
 };
 
-const ErrorBoundary = ({ children, onReset }: PropsWithChildren<{ onReset?: () => void, sentryDsn?: string }>) => {
+const ErrorBoundary = ({ children }: PropsWithChildren<{ sentryDsn?: string }>) => {
     return (
         <ReactErrorBoundary
             FallbackComponent={ErrorFallback}

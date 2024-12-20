@@ -15,10 +15,15 @@ interface ColumnProps {
 
 }
 
+type DropItem = {
+    sourceColumn: CardStatus;
+    card: Card;
+}
+
 export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard, updateCardContent, }) => {
     const [, dropRef] = useDrop({
         accept: "CARD",
-        drop: (item: any) => {
+        drop: (item: DropItem) => {
             const droppedAt = title;
             moveCard(item.sourceColumn, droppedAt, item.card);
         },

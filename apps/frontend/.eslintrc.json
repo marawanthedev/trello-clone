@@ -1,0 +1,64 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "react-hooks",
+        "prettier"
+    ],
+    "rules": {
+        // Customize your rules here
+        "react/prop-types": "off", // Turn off prop-types since we're using TypeScript
+        "@typescript-eslint/no-unused-vars": "warn", // Show unused variables as warnings
+        "react/jsx-uses-react": "off", // Disable the need for React import in JSX files (React 17+)
+        "react/react-in-jsx-scope": "off", // Disable the React import in scope rule for React 17+
+        "prettier/prettier": "error", // Show Prettier formatting issues as errors
+        "no-console": "warn", // Warn on console logs
+        "no-debugger": "error", // Error on debugger statements
+        "semi": [
+            "error",
+            "always"
+        ], // Enforce semicolons
+        "quotes": [
+            "error",
+            "single"
+        ], // Enforce single quotes
+        "indent": [
+            "error",
+            2
+        ], // Enforce 2 spaces indentation
+        "max-len": [
+            "error",
+            {
+                "code": 80
+            }
+        ], // Limit line length to 80 characters
+        "camelcase": "warn", // Enforce camelCase style for variables
+        "@typescript-eslint/explicit-module-boundary-types": "off" // Turn off requirement for explicit return types
+    },
+    "settings": {
+        "react": {
+            "version": "detect" // Automatically detects the version of React
+        }
+    }
+}

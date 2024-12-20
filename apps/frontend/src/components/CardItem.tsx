@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import { Box, Paper, TextField, Typography } from "@mui/material";
 import { Card } from "../types";
