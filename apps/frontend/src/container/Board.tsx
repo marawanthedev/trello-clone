@@ -11,6 +11,7 @@ import {
     getAllCardsAtom,
     loadingAtom,
     removeCardAtom,
+    showLoaderAtom,
     updateCardContentAtom,
     updateCardStatusAtom,
 } from "../store";
@@ -22,7 +23,7 @@ import { useDebouncedCallback } from "../utils";
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
     const [loading] = useAtom(loadingAtom);
-    const [showLoader, setShowLoader] = useState(false);
+    const [showLoader, setShowLoader] = useAtom(showLoaderAtom);
     const [, addCard] = useAtom(addCardAtom);
     const [, getAllCards] = useAtom(getAllCardsAtom);
     const [, removeCard] = useAtom(removeCardAtom);
