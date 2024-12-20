@@ -29,7 +29,7 @@ export const Column: React.FC<ColumnProps> = ({
         },
     });
 
-    const { moveCard, addCard, removeCard, updateCardContent } = useBoardContext();
+    const { moveCard, addCard, } = useBoardContext();
 
 
     return (

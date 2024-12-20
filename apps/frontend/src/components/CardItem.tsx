@@ -30,6 +30,7 @@ export const CardItem: React.FC<CardItemProps> = ({
     const [content, setContent] = useState(card.content);
     const [isEditing, setIsEditing] = useState(false);
 
+
     const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         updateCardContent(card.id, event.target.value);
         setContent(event.target.value);

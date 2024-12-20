@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useAtom } from "jotai";
 import { Column } from "../components/Column";
 import { Box, CircularProgress, Typography, Grid } from "@mui/material";
@@ -15,6 +15,9 @@ import {
     updateCardStatusAtom,
 } from "../store";
 import { BoardProvider } from "../context";
+import { useDebouncedCallback } from "../utils";
+
+
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
@@ -64,8 +67,15 @@ export const Board: React.FC = () => {
         removeCard(card).catch(showBoundary);
     };
 
+    const debouncedUpdateCardContent = useDebouncedCallback(
+        async (id: number, content: string) => {
+            updateCardContent({ id, content }).catch(showBoundary);
+        },
+        300
+    );
+
     const handleUpdateCardContent = async (id: number, content: string) => {
-        updateCardContent({ id, content }).catch(showBoundary);
+        debouncedUpdateCardContent({ id, content })
     };
 
     useEffect(() => {
