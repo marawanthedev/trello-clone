@@ -85,13 +85,24 @@ export const getAllCardsAtom = atom(
         set(loadingAtom, true);
         try {
             const cards = await trpc.card.getAll.query();
-            const newColumns = { ...initialColumnsData };
+            const currentColumns = get(columnsAtom);
+
+            const updatedColumns = {
+                ...currentColumns,
+                [CardStatus.PENDING]: [...currentColumns[CardStatus.PENDING]],
+                [CardStatus.INPROGRESS]: [...currentColumns[CardStatus.INPROGRESS]],
+                [CardStatus.DONE]: [...currentColumns[CardStatus.DONE]],
+            };
 
             cards.forEach((card) => {
-                newColumns[CardStatus[card.status as keyof typeof CardStatus]].push(card);
+                const column = updatedColumns[CardStatus[card.status as keyof typeof CardStatus]];
+                if (!column.some((existingCard) => existingCard.id === card.id)) {
+                    column.push(card);
+                }
             });
 
-            set(columnsAtom, newColumns);
+            console.log({ cards, updatedColumns })
+            set(columnsAtom, updatedColumns);
         } catch (error) {
             console.error("Failed to fetch cards", error);
         } finally {

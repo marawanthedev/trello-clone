@@ -1,9 +1,9 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import { CardItem } from "./CardItem";
-import { Card } from "./Board";
 import { Box, Button, Typography } from "@mui/material";
 import { CardStatus } from "packages/constants";
+import { Card } from "../types"
 
 interface ColumnProps {
     title: CardStatus;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { Column } from "./Column";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { CardStatus } from "../../../../packages/constants";
@@ -27,7 +27,9 @@ export const Board: React.FC = () => {
                 sourceCards.splice(cardIndex, 1);
             }
 
-            targetCards.push(card);
+            if (targetCards.includes(card) === false) {
+                targetCards.push(card);
+            }
 
             return {
                 ...prevState,
