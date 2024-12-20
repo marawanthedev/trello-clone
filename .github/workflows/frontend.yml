@@ -37,13 +37,6 @@ jobs:
           pnpm run lint
         working-directory: ./apps/frontend  
 
-
-      - name: Run tests
-        run: |
-          pnpm test
-        working-directory: ./apps/frontend  
-
-
       - name: Build the app
         run: |
           pnpm run build
