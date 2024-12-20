@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAtom } from "jotai";
-import { Column } from "./Column";
+import { Column } from "../components/Column";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { CardStatus } from "../../../../packages/constants";
 import { useErrorBoundary } from "react-error-boundary";
