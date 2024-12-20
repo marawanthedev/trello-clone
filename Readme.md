@@ -59,6 +59,8 @@ how are we covering all types of errors?
 
 - we are using container -> component pattern to centralize logic handling at container and make component as dumb as possible for ease of testing
 
+![alt text](Untitled-2024-12-20-2258.png)
+
 # Advanced loader
 
 - we noticed that process could be sometimes done very quick, so a loader would be flashing resulting in bad user experience and here is how we solved it
