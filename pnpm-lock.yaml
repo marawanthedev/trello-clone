@@ -138,6 +138,9 @@ importers:
       vite:
         specifier: ^6.0.1
         version: 6.0.3(@types/node@22.10.2)
+      vite-plugin-replace:
+        specifier: ^0.1.1
+        version: 0.1.1(vite@6.0.3(@types/node@22.10.2))
 
 packages:
 
@@ -2289,6 +2292,11 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  vite-plugin-replace@0.1.1:
+    resolution: {integrity: sha512-v+okl3JNt2pf1jDYijw+WPVt6h9FWa/atTi+qnSFBqmKThLTDhlesx0r3bh+oFPmxRJmis5tNx9HtN6lGFoqWg==}
+    peerDependencies:
+      vite: ^2
 
   vite@6.0.3:
     resolution: {integrity: sha512-Cmuo5P0ENTN6HxLSo6IHsjCLn/81Vgrp81oaiFFMRa8gGDj5xEjIcEpf2ZymZtZR8oU0P2JX5WuUp/rlXcHkAw==}
@@ -4753,6 +4761,10 @@ snapshots:
   v8-compile-cache-lib@3.0.1: {}
 
   vary@1.1.2: {}
+
+  vite-plugin-replace@0.1.1(vite@6.0.3(@types/node@22.10.2)):
+    dependencies:
+      vite: 6.0.3(@types/node@22.10.2)
 
   vite@6.0.3(@types/node@22.10.2):
     dependencies:

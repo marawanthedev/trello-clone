@@ -9,7 +9,6 @@ import { useBoardContext } from "../context";
 interface CardItemProps {
     card: Card;
     sourceColumn: CardStatus;
-
 }
 
 export const CardItem: React.FC<CardItemProps> = ({

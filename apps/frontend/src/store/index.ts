@@ -24,13 +24,9 @@ broadcast.onmessage = (event) => {
     }
 };
 
-export const syncColumnsAtom = atom(null, (get, set, columns: ColumnData) => {
-    set(columnsAtom, columns);
-});
+export const syncColumnsAtom = atom(null, (get, set, columns: ColumnData) => set(columnsAtom, columns));
 
-const broadcastUpdate = (columns: ColumnData) => {
-    broadcast.postMessage({ type: "SYNC_COLUMNS", columns });
-};
+const broadcastUpdate = (columns: ColumnData) => broadcast.postMessage({ type: "SYNC_COLUMNS", columns });
 
 export const addCardAtom = atom(null, async (get, set, status: CardStatus) => {
     set(loadingAtom, true);
@@ -40,6 +36,7 @@ export const addCardAtom = atom(null, async (get, set, status: CardStatus) => {
             status,
         });
         const currentColumns = get(columnsAtom);
+
         set(columnsAtom, {
             ...currentColumns,
             [status]: [...currentColumns[status], addedCard],
@@ -58,12 +55,14 @@ export const removeCardAtom = atom(null, async (get, set, card: Card) => {
     try {
         await trpc.card.deleteById.mutate({ id: card.id });
         const currentColumns = get(columnsAtom);
+
         set(columnsAtom, {
             ...currentColumns,
             [card.status]: currentColumns[card.status].filter(
                 (c) => c.id !== card.id,
             ),
         });
+
         broadcastUpdate(get(columnsAtom));
     } catch (error) {
         console.error("Failed to delete card", error);
@@ -78,9 +77,9 @@ export const updateCardContentAtom = atom(
         set(loadingAtom, true);
         try {
             await trpc.card.editContentById.mutate({ id, content });
-
             const currentColumns = get(columnsAtom);
             const updatedColumns = { ...currentColumns };
+
             Object.keys(updatedColumns).forEach((columnKey) => {
                 updatedColumns[columnKey] = updatedColumns[columnKey].map((card) =>
                     card.id === id ? { ...card, content } : card,
@@ -88,7 +87,6 @@ export const updateCardContentAtom = atom(
             });
 
             set(columnsAtom, updatedColumns);
-            console.log({ updatedColumns });
             broadcastUpdate(updatedColumns);
         } catch (error) {
             console.error("Failed to update card content", error);
@@ -97,17 +95,17 @@ export const updateCardContentAtom = atom(
         }
     },
 );
+
 export const updateCardStatusAtom = atom(
     null,
     async (get, set, { id, status }: { id: number; status: CardStatus }) => {
         set(loadingAtom, true);
         try {
             await trpc.card.editStatusById.mutate({ id, status });
-
             const currentColumns = get(columnsAtom);
             const updatedColumns = { ...currentColumns };
-
             let updatedCard;
+
             Object.keys(updatedColumns).forEach((columnKey) => {
                 updatedColumns[columnKey] = updatedColumns[columnKey].filter((card) => {
                     if (card.id === id) {
@@ -123,7 +121,6 @@ export const updateCardStatusAtom = atom(
             }
 
             updatedColumns[status].push(updatedCard);
-
             set(columnsAtom, updatedColumns);
             broadcastUpdate(updatedColumns);
         } catch (error) {
@@ -139,7 +136,6 @@ export const getAllCardsAtom = atom(null, async (get, set) => {
     try {
         const cards = await trpc.card.getAll.query();
         const currentColumns = get(columnsAtom);
-
         const updatedColumns = {
             ...currentColumns,
             [CardStatus.PENDING]: [...currentColumns[CardStatus.PENDING]],

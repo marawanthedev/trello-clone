@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAtom } from "jotai";
 import { Column } from "../components/Column";
 import { Box, CircularProgress, Typography, Grid } from "@mui/material";
@@ -17,8 +17,6 @@ import {
 } from "../store";
 import { BoardProvider } from "../context";
 import { useDebouncedCallback } from "../utils";
-
-
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
@@ -39,8 +37,8 @@ export const Board: React.FC = () => {
         setColumns((prevState) => {
             const sourceCards = [...prevState[sourceColumn]];
             const targetCards = [...prevState[targetColumn]];
-
             const cardIndex = sourceCards.findIndex((c) => c.id === card.id);
+
             if (cardIndex > -1) {
                 sourceCards.splice(cardIndex, 1);
             }

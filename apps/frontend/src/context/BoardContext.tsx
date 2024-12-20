@@ -13,9 +13,7 @@ const BoardContext = createContext<BoardContextProps | undefined>(undefined);
 
 export const useBoardContext = (): BoardContextProps => {
     const context = useContext(BoardContext);
-    if (!context) {
-        throw new Error("useBoardContext must be used within a BoardProvider");
-    }
+    if (!context) throw new Error("useBoardContext must be used within a BoardProvider")
     return context;
 };
 
