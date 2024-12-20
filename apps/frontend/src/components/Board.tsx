@@ -29,6 +29,7 @@ export const Board: React.FC = () => {
 
             if (targetCards.includes(card) === false) {
                 targetCards.push(card);
+                updateCardStatus({ id: card.id, status: targetColumn as CardStatus }).catch(showBoundary)
             }
 
             return {
@@ -50,9 +51,6 @@ export const Board: React.FC = () => {
         updateCardContent({ id, content }).catch(showBoundary)
     }
 
-    const handleUpdateCardStatus = async (id: number, status: CardStatus) => {
-        updateCardStatus({ id, status }).catch(showBoundary)
-    }
 
     useEffect(() => {
         getAllCards().catch(showBoundary)
@@ -90,7 +88,6 @@ export const Board: React.FC = () => {
                         addCard={handleAddCard}
                         removeCard={handleRemoveCard}
                         updateCardContent={handleUpdateCardContent}
-                        updateCardStatus={handleUpdateCardStatus}
                     />
                 ))}
             </Box>

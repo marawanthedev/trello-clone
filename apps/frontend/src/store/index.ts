@@ -69,7 +69,7 @@ export const updateCardStatusAtom = atom(
     async (get, set, { id, status }: { id: number; status: CardStatus }) => {
         set(loadingAtom, true);
         try {
-            await trpc.card.editStatusById.mutate({ id, status });
+            const editedCard = await trpc.card.editStatusById.mutate({ id, status });
         } catch (error) {
             console.error("Failed to update card status", error);
         } finally {
@@ -101,7 +101,6 @@ export const getAllCardsAtom = atom(
                 }
             });
 
-            console.log({ cards, updatedColumns })
             set(columnsAtom, updatedColumns);
         } catch (error) {
             console.error("Failed to fetch cards", error);

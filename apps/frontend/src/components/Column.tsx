@@ -12,17 +12,15 @@ interface ColumnProps {
     addCard: (column: CardStatus) => void;
     removeCard: (card: Card) => void;
     updateCardContent: (id: number, content: string,) => void
-    updateCardStatus: (id: number, status: CardStatus,) => void
 
 }
 
-export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard, updateCardContent, updateCardStatus }) => {
+export const Column: React.FC<ColumnProps> = ({ title, cards, moveCard, addCard, removeCard, updateCardContent, }) => {
     const [, dropRef] = useDrop({
         accept: "CARD",
         drop: (item: any) => {
             const droppedAt = title;
             moveCard(item.sourceColumn, droppedAt, item.card);
-            updateCardStatus(item.card.id, droppedAt)
         },
     });
 
