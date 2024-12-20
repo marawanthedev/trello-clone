@@ -3,6 +3,7 @@ import { Column } from "./Column";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import trpc from "../trpc";
 import { CardStatus } from "../../../../packages/constants"
+import { useErrorBoundary } from "react-error-boundary";
 
 const initialData = {
     [CardStatus.PENDING]: [
@@ -41,6 +42,8 @@ const initialColumnsData: ColumnData = {
 export const Board: React.FC = () => {
     const [columns, setColumns] = useState<ColumnData>(initialColumnsData);
     const [loading, setLoading] = useState(false);
+    const { showBoundary } = useErrorBoundary()
+
 
 
     const moveCard = (sourceColumn: CardStatus, targetColumn: CardStatus, card: Card) => {
@@ -83,7 +86,7 @@ export const Board: React.FC = () => {
         }
         catch (e: any) {
             console.log(`failed to add card`)
-            // throw new Error(e)
+            showBoundary(e)
         }
         finally {
             setLoading(false);
