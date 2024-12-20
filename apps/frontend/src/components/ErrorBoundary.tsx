@@ -18,7 +18,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error }) => {
             <Typography variant="h4" color="error" gutterBottom>
                 Something went wrong!
             </Typography>
-            <Typography variant="body1" color="textSecondary" sx={{ marginBottom: "16px" }}>
+            <Typography variant="body1" color="textSecondary" sx={{ marginBottom: "16px", maxWidth: '600px' }}>
                 {error.message}
             </Typography>
             <Button variant="contained" onClick={resetBoundary}>

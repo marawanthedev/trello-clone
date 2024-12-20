@@ -8,6 +8,12 @@
             ],
             "packages/*": [
                 "../../packages/*"
+            ],
+            "types": [
+                "./src/types"
+            ],
+            "store": [
+                "./src/store"
             ]
         },
     },
