@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { Column } from "../components/Column";
 import { Box, CircularProgress, Typography, Grid } from "@mui/material";
@@ -22,6 +22,7 @@ import { useDebouncedCallback } from "../utils";
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
     const [loading] = useAtom(loadingAtom);
+    const [showLoader, setShowLoader] = useState(false);
     const [, addCard] = useAtom(addCardAtom);
     const [, getAllCards] = useAtom(getAllCardsAtom);
     const [, removeCard] = useAtom(removeCardAtom);
@@ -82,6 +83,28 @@ export const Board: React.FC = () => {
         getAllCards().catch(showBoundary);
     }, [getAllCards]);
 
+
+    // to avoid flashy loader, we will show it if process takes more than .25 seconds and ensure it stays for at least a second to avoid flickering
+    useEffect(() => {
+        let delayTimer: NodeJS.Timeout;
+        let hideTimer: NodeJS.Timeout;
+
+        if (loading) {
+            delayTimer = setTimeout(() => {
+                setShowLoader(true);
+            }, 250);
+        } else if (showLoader) {
+            hideTimer = setTimeout(() => {
+                setShowLoader(false);
+            }, 1000);
+        }
+
+        return () => {
+            clearTimeout(delayTimer);
+            clearTimeout(hideTimer);
+        };
+    }, [loading, showLoader]);
+
     return (
         <BoardProvider value={{
             moveCard,
@@ -93,7 +116,7 @@ export const Board: React.FC = () => {
                 <Typography variant="h4" sx={{ marginBottom: "20px" }}>
                     Tasks List
                 </Typography>
-                {loading && (
+                {showLoader && (
                     <Box
                         sx={{
                             position: "fixed",
