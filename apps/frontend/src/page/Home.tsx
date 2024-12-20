@@ -1,5 +1,5 @@
-import { Board } from "../components"
+import { Board } from "../components";
 
 export const HomePage = () => {
-    return <Board />
-}
+  return <Board />;
+};
