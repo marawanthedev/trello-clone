@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDrag } from "react-dnd";
 import { Box, Paper, TextField, Typography } from "@mui/material";
-import { Card } from "./Board";
+import { Card } from "../types";
 import { CardStatus } from "packages/constants";
 import { Delete } from "@mui/icons-material";
 
