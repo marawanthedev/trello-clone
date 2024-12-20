@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useAtom } from "jotai";
 import { Column } from "../components/Column";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Grid } from "@mui/material";
 import { CardStatus } from "../../../../packages/constants";
 import { useErrorBoundary } from "react-error-boundary";
-import { Card, } from "types"
+import { Card } from "types";
 import { addCardAtom, columnsAtom, getAllCardsAtom, loadingAtom, removeCardAtom, updateCardContentAtom, updateCardStatusAtom } from "../store";
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
-    const [loading,] = useAtom(loadingAtom);
+    const [loading] = useAtom(loadingAtom);
     const [, addCard] = useAtom(addCardAtom);
     const [, getAllCards] = useAtom(getAllCardsAtom);
     const [, removeCard] = useAtom(removeCardAtom);
@@ -29,7 +29,7 @@ export const Board: React.FC = () => {
 
             if (targetCards.includes(card) === false) {
                 targetCards.push(card);
-                updateCardStatus({ id: card.id, status: targetColumn as CardStatus }).catch(showBoundary)
+                updateCardStatus({ id: card.id, status: targetColumn as CardStatus }).catch(showBoundary);
             }
 
             return {
@@ -41,25 +41,24 @@ export const Board: React.FC = () => {
     };
 
     const handleAddCard = async (status: CardStatus) => {
-        addCard(status).catch(showBoundary)
-    }
+        addCard(status).catch(showBoundary);
+    };
+
     const handleRemoveCard = async (card: Card) => {
-        removeCard(card).catch(showBoundary)
-    }
+        removeCard(card).catch(showBoundary);
+    };
 
     const handleUpdateCardContent = async (id: number, content: string) => {
-        updateCardContent({ id, content }).catch(showBoundary)
-    }
-
+        updateCardContent({ id, content }).catch(showBoundary);
+    };
 
     useEffect(() => {
-        getAllCards().catch(showBoundary)
+        getAllCards().catch(showBoundary);
     }, [getAllCards]);
 
-
     return (
-        <Box style={{ padding: "40px 60px" }}>
-            <Typography variant="h4">Tasks List</Typography>
+        <Box sx={{ padding: { xs: "20px", sm: "40px 60px" } }}>
+            <Typography variant="h4" sx={{ marginBottom: "20px" }}>Tasks List</Typography>
             {loading && (
                 <Box
                     sx={{
@@ -78,19 +77,27 @@ export const Board: React.FC = () => {
                     <CircularProgress size={60} />
                 </Box>
             )}
-            <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+
+            <Grid container spacing={2}>
                 {Object.keys(columns).map((colName) => (
-                    <Column
+                    <Grid
+                        item
                         key={colName}
-                        title={CardStatus[colName as keyof typeof CardStatus]}
-                        cards={columns[colName]}
-                        moveCard={moveCard}
-                        addCard={handleAddCard}
-                        removeCard={handleRemoveCard}
-                        updateCardContent={handleUpdateCardContent}
-                    />
+                        xs={12}
+                        sm={12}
+                        md={4}
+                    >
+                        <Column
+                            title={CardStatus[colName as keyof typeof CardStatus]}
+                            cards={columns[colName]}
+                            moveCard={moveCard}
+                            addCard={handleAddCard}
+                            removeCard={handleRemoveCard}
+                            updateCardContent={handleUpdateCardContent}
+                        />
+                    </Grid>
                 ))}
-            </Box>
+            </Grid>
         </Box>
     );
 };
