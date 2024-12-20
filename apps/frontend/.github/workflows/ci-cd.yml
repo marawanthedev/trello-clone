@@ -35,4 +35,4 @@ jobs:
 
       - name: Build the app
         run: |
-          pnpm run build  # Add this if you have a build script in package.json
+          pnpm run build
