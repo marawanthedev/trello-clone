@@ -1,6 +1,6 @@
-import { router, publicProcedure } from "../trpc";
-import { createCardSchema, editCardContentSchema, editCardStatusSchema, IdSchema } from "../schemas";
-import { addCard, deleteCard, editCardContent, editCardStatus, getAllCards, getCard } from "../service";
+import { router, publicProcedure } from "..";
+import { createCardSchema, editCardContentSchema, editCardStatusSchema, IdSchema } from "../../schemas";
+import { addCard, deleteCard, editCardContent, editCardStatus, getAllCards, getCard } from "../../service";
 
 export const cardRouter = router({
     create: publicProcedure

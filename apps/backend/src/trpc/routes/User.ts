@@ -1,6 +1,6 @@
-import { createUserSchema, IdSchema, } from "../schemas";
-import { addUser, getUser } from "../service";
-import { router, publicProcedure } from "../trpc";
+import { createUserSchema, IdSchema, } from "../../schemas";
+import { addUser, getUser } from "../../service";
+import { router, publicProcedure } from "..";
 
 export const userRouter = router({
     getById: publicProcedure.input(IdSchema).query(async (opts) => {
