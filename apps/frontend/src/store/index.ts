@@ -88,6 +88,7 @@ export const updateCardContentAtom = atom(
             });
 
             set(columnsAtom, updatedColumns);
+            console.log({ updatedColumns });
             broadcastUpdate(updatedColumns);
         } catch (error) {
             console.error("Failed to update card content", error);

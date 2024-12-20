@@ -77,7 +77,7 @@ export const Board: React.FC = () => {
     );
 
     const handleUpdateCardContent = async (id: number, content: string) => {
-        debouncedUpdateCardContent({ id, content })
+        debouncedUpdateCardContent(id, content)
     };
 
     useEffect(() => {
