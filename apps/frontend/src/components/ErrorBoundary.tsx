@@ -12,8 +12,6 @@ import { Button, Box, Typography } from "@mui/material";
 const ErrorFallback: React.FC<FallbackProps> = ({ error }) => {
     const { resetBoundary, showBoundary } = useErrorBoundary();
 
-
-
     useEffect(() => {
         // these are added to catch unhandled errors and promise rejections that happens async which are naturally not caught by react error boundary, but this way we still utilize the error boundary to show the error page
         const errorHandler = (event: ErrorEvent) => {

@@ -92,10 +92,10 @@ export const Board: React.FC = () => {
             delayTimer = setTimeout(() => {
                 setShowLoader(true);
             }, 250);
-        } else if (showLoader) {
+        } else if (showLoader && !loading) {
             hideTimer = setTimeout(() => {
                 setShowLoader(false);
-            }, 1000);
+            }, 500);
         }
 
         return () => {
