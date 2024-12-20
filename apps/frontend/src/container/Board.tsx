@@ -10,6 +10,7 @@ import {
     columnsAtom,
     getAllCardsAtom,
     loadingAtom,
+    loadingStartAtom,
     removeCardAtom,
     showLoaderAtom,
     updateCardContentAtom,
@@ -22,6 +23,7 @@ export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
     const [loading] = useAtom(loadingAtom);
     const [showLoader, setShowLoader] = useAtom(showLoaderAtom);
+    const [loadingStart, setLoadingStart] = useAtom(loadingStartAtom)
     const [, addCard] = useAtom(addCardAtom);
     const [, getAllCards] = useAtom(getAllCardsAtom);
     const [, removeCard] = useAtom(removeCardAtom);
@@ -89,20 +91,25 @@ export const Board: React.FC = () => {
         let hideTimer: NodeJS.Timeout;
 
         if (loading) {
+            setLoadingStart(Date.now());
             delayTimer = setTimeout(() => {
                 setShowLoader(true);
             }, 250);
         } else if (showLoader && !loading) {
+            const loadDuration = Date.now() - (loadingStart || 0);
+            const remainingTime = loadDuration > 500 ? 0 : 500 - loadDuration;
+
             hideTimer = setTimeout(() => {
                 setShowLoader(false);
-            }, 500);
+                setLoadingStart(null);
+            }, remainingTime);
         }
 
         return () => {
             clearTimeout(delayTimer);
             clearTimeout(hideTimer);
         };
-    }, [loading, showLoader]);
+    }, [loading, showLoader, loadingStart]);
 
     return (
         <BoardProvider value={{

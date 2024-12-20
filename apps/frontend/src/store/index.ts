@@ -13,6 +13,8 @@ const store = getDefaultStore();
 export const columnsAtom = atom(initialColumnsData);
 export const loadingAtom = atom(false);
 export const showLoaderAtom = atom(false);
+export const loadingStartAtom = atom<number | null>(null);
+
 
 
 const broadcast = new BroadcastChannel("board_sync");
