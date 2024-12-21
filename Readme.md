@@ -1,5 +1,18 @@
 # This will be overall guide of the app implementation
 
+# Postgresql Docker Container Setup Guide
+
+
+- first time setup
+    - docker pull postgres (pull postgres image)
+    - docker run --name postgres-container -e POSTGRES_PASSWORD=mysecretpassword -d postgres (start container using postgres image)
+    - docker ps (verify container is running)
+    
+- post first time setup
+    - docker ps -a
+    - copy postgres container id
+    - docker start {container_id}
+
 
 # Code Standradisation
 
