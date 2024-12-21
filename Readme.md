@@ -1,7 +1,10 @@
+# What else could be added
+- husky 
+    - to help in formatting, linting, building app locally before pushing to avoid over-using our github action
+
 # This will be overall guide of the app implementation
 
 # Postgresql Docker Container Setup Guide
-
 
 - first time setup
     - docker pull postgres (pull postgres image)
@@ -25,6 +28,8 @@
     - linting
     - app building
     - executing tests
+
+- CI added are targeting frontend and will only be triggered if the change was frontend relevant, otherwise it will be skipped
 
 
 # Containerisation
