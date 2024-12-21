@@ -18,7 +18,8 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:react-hooks/recommended",
         "prettier",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "react-app/jest"
     ],
     "plugins": [
         "react",

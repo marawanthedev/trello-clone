@@ -31,14 +31,18 @@ jobs:
           pnpm install
         working-directory: ./apps/frontend  
 
+      - name: Build the app
+        run: |
+          pnpm run build
+        working-directory: ./apps/frontend  
 
       - name: Run ESLint
         run: |
           pnpm run lint
         working-directory: ./apps/frontend  
 
-      - name: Build the app
+      - name: Test the App
         run: |
-          pnpm run build
+          pnpm run test
         working-directory: ./apps/frontend  
 

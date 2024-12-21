@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import { Box, Paper, TextField, Typography } from "@mui/material";
-import { Card } from "../types";
-import { CardStatus } from "packages/constants";
+import { Card } from "../../types";
+import { CardStatus } from "../../../../../packages/constants";
 import { Delete } from "@mui/icons-material";
-import { useBoardContext } from "../context";
+import { useBoardContext } from "../../context";
 
 interface CardItemProps {
     card: Card;
@@ -14,7 +14,6 @@ interface CardItemProps {
 export const CardItem: React.FC<CardItemProps> = ({
     card,
     sourceColumn,
-
 }) => {
     const [{ isDragging }, dragRef] = useDrag({
         type: "CARD",
@@ -85,6 +84,7 @@ export const CardItem: React.FC<CardItemProps> = ({
                         {content}
                     </Typography>
                     <Delete
+                        data-testid="delete-card"
                         onClick={() => removeCard(card)}
                         sx={{ color: "red", cursor: "pointer" }}
                     />
