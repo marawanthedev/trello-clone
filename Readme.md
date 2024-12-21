@@ -35,7 +35,7 @@
 # Containerisation
 
 - we are using docker as per the following
-    - Docker image for each app
+    - Docker image for each app (frontend one is the complete, backend was not fully done)
     - Docker compose on root level that spins up those apps along with postgresql container for our prisma to be connected to
 
 
