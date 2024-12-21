@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { Column } from '../components/Column';
+import { Column } from '../../components/Column';
 import { Box, CircularProgress, Typography, Grid } from '@mui/material';
-import { CardStatus } from '../../../../packages/constants';
+import { CardStatus } from '../../../../../packages/constants';
 import { useErrorBoundary } from 'react-error-boundary';
 import { Card } from 'types';
 import {
@@ -15,9 +15,9 @@ import {
   showLoaderAtom,
   updateCardContentAtom,
   updateCardStatusAtom,
-} from '../store';
-import { BoardProvider } from '../context';
-import { useDebouncedCallback } from '../utils';
+} from '../../store';
+import { BoardProvider } from '../../context';
+import { useDebouncedCallback } from '../../utils';
 
 export const Board: React.FC = () => {
   const [columns, setColumns] = useAtom(columnsAtom);
