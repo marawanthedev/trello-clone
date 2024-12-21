@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useAtom } from "jotai";
-import { Column } from "../components/Column";
-import { Box, CircularProgress, Typography, Grid } from "@mui/material";
-import { CardStatus } from "../../../../packages/constants";
-import { useErrorBoundary } from "react-error-boundary";
-import { Card } from "types";
+import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { Column } from '../components/Column';
+import { Box, CircularProgress, Typography, Grid } from '@mui/material';
+import { CardStatus } from '../../../../packages/constants';
+import { useErrorBoundary } from 'react-error-boundary';
+import { Card } from 'types';
 import {
     addCardAtom,
     columnsAtom,
@@ -15,15 +15,15 @@ import {
     showLoaderAtom,
     updateCardContentAtom,
     updateCardStatusAtom,
-} from "../store";
-import { BoardProvider } from "../context";
-import { useDebouncedCallback } from "../utils";
+} from '../store';
+import { BoardProvider } from '../context';
+import { useDebouncedCallback } from '../utils';
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useAtom(columnsAtom);
     const [loading] = useAtom(loadingAtom);
     const [showLoader, setShowLoader] = useAtom(showLoaderAtom);
-    const [loadingStart, setLoadingStart] = useAtom(loadingStartAtom)
+    const [loadingStart, setLoadingStart] = useAtom(loadingStartAtom);
     const [, addCard] = useAtom(addCardAtom);
     const [, getAllCards] = useAtom(getAllCardsAtom);
     const [, removeCard] = useAtom(removeCardAtom);
@@ -73,19 +73,17 @@ export const Board: React.FC = () => {
         async (id: number, content: string) => {
             updateCardContent({ id, content }).catch(showBoundary);
         },
-        300
+        300,
     );
 
     const handleUpdateCardContent = async (id: number, content: string) => {
-        debouncedUpdateCardContent(id, content)
+        debouncedUpdateCardContent(id, content);
     };
 
     useEffect(() => {
         getAllCards().catch(showBoundary);
     }, [getAllCards]);
 
-
-    // to avoid flashy loader, we will show it if process takes more than .25 seconds and ensure it stays for at least a second to avoid flickering
     useEffect(() => {
         let delayTimer: NodeJS.Timeout;
         let hideTimer: NodeJS.Timeout;
@@ -112,28 +110,30 @@ export const Board: React.FC = () => {
     }, [loading, showLoader, loadingStart]);
 
     return (
-        <BoardProvider value={{
-            moveCard,
-            addCard: handleAddCard,
-            removeCard: handleRemoveCard,
-            updateCardContent: handleUpdateCardContent,
-        }}>
-            <Box sx={{ padding: { xs: "20px", sm: "40px 60px" } }}>
-                <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        <BoardProvider
+            value={{
+                moveCard,
+                addCard: handleAddCard,
+                removeCard: handleRemoveCard,
+                updateCardContent: handleUpdateCardContent,
+            }}
+        >
+            <Box sx={{ padding: { xs: '20px', sm: '40px 60px' } }}>
+                <Typography variant="h4" sx={{ marginBottom: '20px' }}>
                     Tasks List
                 </Typography>
                 {showLoader && (
                     <Box
                         sx={{
-                            position: "fixed",
+                            position: 'fixed',
                             top: 0,
                             left: 0,
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             zIndex: 9999,
                         }}
                     >

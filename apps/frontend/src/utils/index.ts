@@ -1,1 +1,1 @@
-export * from "./debouncedCallBack"
+export * from './debouncedCallBack';
