@@ -1,3 +1,4 @@
+import { CardStatus } from "src/constants";
 import { router, publicProcedure } from "..";
 import { createCardSchema, editCardContentSchema, editCardStatusSchema, IdSchema } from "../../schemas";
 import { addCard, deleteCard, editCardContent, editCardStatus, getAllCards, getCard } from "../../service";
@@ -31,7 +32,7 @@ export const cardRouter = router({
     }),
     editStatusById: publicProcedure.input(editCardStatusSchema).mutation(async (opts) => {
         const { input: { id, status } } = opts;
-        const card = await editCardStatus(id, status)
+        const card = await editCardStatus(id as number, status as CardStatus)
         return card;
     }),
 });

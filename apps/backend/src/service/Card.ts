@@ -1,6 +1,6 @@
-import { CardStatus, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { prisma } from "../prisma";
-
+import { CardStatus } from '../constants';
 
 export const addCard = (card: Prisma.CardCreateInput) => {
     try {
