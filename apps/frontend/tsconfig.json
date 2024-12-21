@@ -1,7 +1,13 @@
 {
-    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "baseUrl": ".",
+        "target": "ES2020", // Specify ECMAScript target version
+        "module": "CommonJS", // Specify module code generation method
+        "strict": true, // Enable all strict type-checking options
+        "esModuleInterop": true, // Allow default imports from non-ES modules
+        "skipLibCheck": true, // Skip type checking of declaration files
+        "outDir": "./dist", // Specify output directory for compiled files
+        "rootDir": "./src",
         "paths": {
             "backend/*": [
                 "../backend/*"
@@ -14,11 +20,11 @@
             ],
             "store": [
                 "./src/store"
-            ]
+            ],
         },
     },
     "include": [
-        "src"
+        "src/**/*.ts"
     ],
     "exclude": [
         "node_modules"

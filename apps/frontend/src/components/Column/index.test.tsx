@@ -1,7 +1,8 @@
+import React from 'react';
 import { Column } from './index';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { CardStatus } from '../../../../../packages/constants';
+import { CardStatus } from '../../constants';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BoardProvider } from '../../context';

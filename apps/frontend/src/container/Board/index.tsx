@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { Column } from '../../components/Column';
 import { Box, CircularProgress, Typography, Grid } from '@mui/material';
-import { CardStatus } from '../../../../../packages/constants';
+import { CardStatus } from '../../constants';
 import { useErrorBoundary } from 'react-error-boundary';
-import { Card } from 'types';
+import { Card } from '../../types';
 import {
   addCardAtom,
   columnsAtom,

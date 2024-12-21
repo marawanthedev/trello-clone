@@ -1,6 +1,6 @@
-import { CardStatus } from 'packages/constants';
+import { CardStatus } from '../constants';
 import React, { createContext, useContext, ReactNode } from 'react';
-import { Card } from 'types';
+import { Card } from '../types';
 
 interface BoardContextProps {
   moveCard: (

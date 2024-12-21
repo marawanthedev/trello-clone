@@ -1,23 +1,26 @@
-# Use Node.js base image
-FROM node:20
+# Build stage
+FROM node:20-slim as build
 
-# Set working directory
 WORKDIR /app
 
-# Copy workspace dependencies
-COPY ../../pnpm-lock.yaml ../../package.json ../../pnpm-workspace.yaml ./
-COPY ./package.json ./apps/frontend/
+# Install pnpm
+RUN npm install -g pnpm
 
 # Install dependencies
-RUN npm install -g pnpm
-RUN pnpm install 
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 
-# Copy frontend code
-COPY ./ ./apps/frontend/
+# Copy source code
+COPY . .
 
-# Build React app
-RUN pnpm --filter frontend dev
+# Build the application
+RUN pnpm build
 
-# Serve the app using a lightweight server
+# Install serve
 RUN npm install -g serve
-CMD ["serve", "-s", "dist"]
+
+# Production stage - using the same image to serve
+EXPOSE 3000
+
+# Serve the static files
+CMD ["serve", "-s", "dist", "-l", "8080"]

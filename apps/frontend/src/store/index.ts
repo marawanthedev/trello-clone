@@ -1,5 +1,5 @@
 import { atom, getDefaultStore } from 'jotai';
-import { CardStatus } from '../../../../packages/constants';
+import { CardStatus } from '../constants';
 import { Card, ColumnData } from 'types';
 import trpc from '../trpc';
 
@@ -147,7 +147,7 @@ export const getAllCardsAtom = atom(null, async (get, set) => {
       [CardStatus.DONE]: [...currentColumns[CardStatus.DONE]],
     };
 
-    cards.forEach((card) => {
+    cards.forEach((card: Card) => {
       const column =
         updatedColumns[CardStatus[card.status as keyof typeof CardStatus]];
       if (!column.some((existingCard) => existingCard.id === card.id)) {

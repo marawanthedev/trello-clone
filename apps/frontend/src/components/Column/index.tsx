@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { CardItem } from '../CardItem';
 import { Box, Button, Typography } from '@mui/material';
-import { CardStatus } from 'packages/constants';
+import { CardStatus } from '../../constants';
 import { Card } from '../../types';
 import { useBoardContext } from '../../context';
 

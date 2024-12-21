@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { Box, Paper, TextField, Typography } from '@mui/material';
 import { Card } from '../../types';
-import { CardStatus } from '../../../../../packages/constants';
+import { CardStatus } from '../../constants';
 import { Delete } from '@mui/icons-material';
 import { useBoardContext } from '../../context';
 

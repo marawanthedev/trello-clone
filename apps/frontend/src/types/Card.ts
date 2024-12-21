@@ -1,4 +1,4 @@
-import { CardStatus } from 'packages/constants';
+import { CardStatus } from '../constants';
 
 export interface Card {
   id: number;
