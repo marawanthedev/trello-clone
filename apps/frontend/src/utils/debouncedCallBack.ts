@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 export const useDebouncedCallback = <T extends unknown[]>(
   callback: (...args: T) => void,
-  delay: number
+  delay: number,
 ) => {
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -16,6 +16,6 @@ export const useDebouncedCallback = <T extends unknown[]>(
         callback(...args);
       }, delay);
     },
-    [callback, delay]
+    [callback, delay],
   );
 };
