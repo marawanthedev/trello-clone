@@ -20,7 +20,7 @@ const broadcast = new BroadcastChannel('board_sync');
 broadcast.onmessage = (event) => {
   if (event.data.type === 'SYNC_COLUMNS') {
     const { columns } = event.data;
-    store.set(syncColumnsAtom, columns);
+    store.set(columnsAtom, columns);
   }
 };
 
@@ -90,7 +90,8 @@ export const updateCardContentAtom = atom(
       });
 
       set(columnsAtom, updatedColumns);
-      broadcastUpdate(updatedColumns);
+
+      broadcastUpdate(get(columnsAtom));
     } catch (error) {
       console.error('Failed to update card content', error);
     } finally {
@@ -125,7 +126,7 @@ export const updateCardStatusAtom = atom(
 
       updatedColumns[status].push(updatedCard);
       set(columnsAtom, updatedColumns);
-      broadcastUpdate(updatedColumns);
+      broadcastUpdate(get(columnsAtom));
     } catch (error) {
       console.error('Failed to update card status', error);
     } finally {

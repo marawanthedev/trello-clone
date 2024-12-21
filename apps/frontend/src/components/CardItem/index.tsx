@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { Box, Paper, TextField, Typography } from '@mui/material';
 import { Card } from '../../types';
@@ -40,6 +40,12 @@ export const CardItem: React.FC<CardItemProps> = ({ card, sourceColumn }) => {
   const handleClick = () => {
     setIsEditing(true);
   };
+
+  useEffect(() => {
+    if (card.content !== content) {
+      setContent(card.content); // Sync with new card content
+    }
+  }, [card.content]);
 
   return (
     <Paper
