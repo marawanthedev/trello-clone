@@ -7,7 +7,8 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "npx tsc --outDir ./dist",
     "start": "node dist/index",
-    "migrate": "npx prisma migrate dev "
+    "migrate": "npx prisma migrate dev ",
+    "generate": "npx generate --schema=./prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

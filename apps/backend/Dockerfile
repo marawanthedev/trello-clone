@@ -2,21 +2,31 @@
 FROM node:20
 
 # Set working directory
-WORKDIR /app
+WORKDIR /apps/backend/
 
-# Copy workspace dependencies
-COPY ../../pnpm-lock.yaml ../../package.json ../../pnpm-workspace.yaml ./
-COPY ./package.json ./apps/backend/
+# Copy workspace dependencies (pnpm-lock.yaml, package.json, and pnpm-workspace.yaml) into the correct location
+COPY package.json pnpm-lock.yaml prisma ./
 
-# Install dependencies
+# Install pnpm globally
 RUN npm install -g pnpm
+
+# Install dependencies using pnpm (at this point, package.json and pnpm-lock.yaml should exist in /apps/backend)
 RUN pnpm install
 
-# Copy backend code
+# Copy the rest of the backend code into the container
 COPY ./ ./apps/backend/
 
-# Build the app (if using TypeScript)
-RUN pnpm --filter backend run build
+# Run Prisma generate to create the Prisma client
+RUN pnpm run
 
-# Start the app
-CMD ["pnpm", "--filter", "backend", "start"]
+# Apply Prisma migrations (if needed, this applies the schema to the database)
+RUN pnpm prisma migrate 
+
+# Build the backend app (if using TypeScript)
+RUN npx tsc -p ./apps/backend/tsconfig.json --outDir ./dist
+
+# Expose the port the app will run on
+EXPOSE 3000
+
+# Start the backend app
+CMD ["pnpm", "run", "start"]

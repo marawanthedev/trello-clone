@@ -1,4 +1,4 @@
-import { CardStatus } from "src/constants";
+import { CardStatus } from "../../constants";
 import { router, publicProcedure } from "..";
 import { createCardSchema, editCardContentSchema, editCardStatusSchema, IdSchema } from "../../schemas";
 import { addCard, deleteCard, editCardContent, editCardStatus, getAllCards, getCard } from "../../service";

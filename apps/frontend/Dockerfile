@@ -20,7 +20,7 @@ RUN pnpm build
 RUN npm install -g serve
 
 # Production stage - using the same image to serve
-EXPOSE 3000
+EXPOSE 8080
 
 # Serve the static files
 CMD ["serve", "-s", "dist", "-l", "8080"]
