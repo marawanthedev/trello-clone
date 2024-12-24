@@ -1,17 +1,48 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
     "paths": {
-      "packages/*": [
+      "@packages/*": [
         "../../packages/*"
+      ],
+      "@schemas": [
+        "./src/schemas"
+      ],
+      "@constant": [
+        "./src/constant"
+      ],
+      "@services": [
+        "./src/services"
+      ],
+      "@trpc": [
+        "./src/trpc"
+      ],
+      "@trpc/*": [
+        "./src/trpc/*"
+      ],
+      "@trpc-routes": [
+        "./src/trpc/routes"
+      ],
+      "@app-prisma": [
+        "./src/prisma.ts"
       ]
     },
+    "skipLibCheck": true,
+    "strict": true
   },
+  "lib": [
+    "es2015"
+  ],
   "include": [
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
